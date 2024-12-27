@@ -1,0 +1,112 @@
+#!/usr/bin/env ruby
+
+require "date"
+require "json"
+
+MAJOR = 0
+MINOR = 0
+PATCH = 0
+
+def version
+  return "#{MAJOR}.#{MINOR}.#{PATCH}"
+end
+
+def generated
+  return Time.now.to_i
+end
+
+# Helper function to get week identifier (year-week)
+def get_week_identifier(date_str)
+  date = Date.parse(date_str)
+  "Week #{date.strftime('%V')} of #{date.year}"
+end
+
+# Read the JSON file
+json_data = File.read('data.json')
+entries = JSON.parse(json_data)
+
+# Group entries by week
+entries_by_week = entries.group_by { |entry| get_week_identifier(entry['date']) }
+
+# Create HTML content
+html_content = <<~HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="weekly-version" content="#{version}">
+    <meta name="generated-at" content="#{generated}">
+    <title>Weekly Resources</title>
+    <style>
+        body {
+            font-family: monospace;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .week-group {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .week-header {
+            margin-top: 0.5rem;
+            margin-bottom: 0.1rem;
+        }
+        .entry {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .date {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .title {
+            font-size: 1.2em;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+HTML
+
+# Sort weeks in reverse chronological order
+total_weeks = entries_by_week.keys.length
+entries_by_week.keys.sort.reverse.each.with_index do |week, index|
+    html_content += <<~WEEK_GROUP
+    <div class="week-group">
+        <h2 class="week-header">##{total_weeks - index} - #{week}</h2>
+    WEEK_GROUP
+
+    # Sort entries within each week by date (newest first)
+    entries_by_week[week].sort_by { |entry| entry['date'] }.reverse.each do |entry|
+        html_content += <<~ENTRY
+        <div class="entry">
+            <div class="title">
+                <a href="#{entry['url']}">#{entry['title']}</a>
+            </div>
+            <div class="description">#{entry['description']}</div>
+        </div>
+        ENTRY
+    end
+
+    html_content += "</div>\n"
+end
+
+html_content += <<~HTML
+</body>
+</html>
+HTML
+
+# Write the HTML file
+File.write('./build/index.html', html_content)
+puts "HTML file has been generated as './build/index.html'"
+
