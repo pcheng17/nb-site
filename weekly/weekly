@@ -21,6 +21,8 @@ def get_week_identifier(date_str)
   "Week #{date.strftime('%V')} of #{date.year}"
 end
 
+start_time = Time.now
+
 # Read the JSON file
 json_data = File.read('data.json')
 entries = JSON.parse(json_data)
@@ -131,7 +133,13 @@ html_content += <<-HTML
 </html>
 HTML
 
+# First make sure the build directory exists
+Dir.mkdir('build') unless Dir.exist?('build')
+
 # Write the HTML file
 File.write('./build/index.html', html_content)
 puts "HTML file has been generated as './build/index.html'"
 
+end_time = Time.now
+duration = end_time - start_time
+puts "Time taken: #{duration} seconds"
