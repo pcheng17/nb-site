@@ -53,6 +53,9 @@ html_content = <<-HTML
       padding-bottom: 1rem;
       border-bottom: 1px solid #eee;
     }
+    .week-group > .metadata {
+      font-size: 1em;
+    }
     .week-header {
       margin-top: 0.5rem;
       margin-bottom: 0.5rem;
@@ -64,8 +67,8 @@ html_content = <<-HTML
       padding-left: 0;
     }
     .entry {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
     }
     .date {
       color: #666;
@@ -100,6 +103,9 @@ entries_by_week.keys.sort.reverse.each.with_index do |week, index|
   html_content += <<-WEEK_GROUP
   <div class="week-group">
     <h2 class="week-header">##{total_weeks - index} - #{week}</h2>
+    <!-- <div class="metadata"> -->
+    <!--  <span class="date">Date range: #{entries_by_week[week].first['date']} - #{entries_by_week[week].last['date']}</span> -->
+    <!-- </div> -->
   WEEK_GROUP
 
   html_content += <<-WEEK_ENTRIES
