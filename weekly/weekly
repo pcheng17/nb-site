@@ -18,7 +18,10 @@ end
 # Helper function to get week identifier (year-week)
 def get_week_identifier(date_str)
   date = Date.parse(date_str)
-  "Week #{date.strftime('%V')} of #{date.year}"
+  year = date.year
+  first_day_of_week = date - date.wday
+  week_num = date.strftime('%V').to_i
+  [week_num, year, first_day_of_week.strftime('%b %d, %Y')]
 end
 
 start_time = Time.now
@@ -42,19 +45,31 @@ html_content = <<-HTML
   <title>Weekly Resources</title>
   <style>
     body {
+      background-color: rgb(253, 246, 227);
       font-family: monospace;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .container {
+      background-color: rgb(255, 253, 245);
       max-width: 800px;
       margin: 0 auto;
-      padding: 1rem;
-      line-height: 1.6;
+      padding: 0rem 1rem 0rem 1rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     .week-group {
       padding-top: 1rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid #eee;
     }
+    .week-group:last-child {
+      border-bottom: none;
+    }
     .week-group > .metadata {
       font-size: 1em;
+    }
+    .week-group > .metadata > .calendar {
+      margin-right: 0.2rem;
     }
     .week-header {
       margin-top: 0.5rem;
@@ -85,7 +100,7 @@ html_content = <<-HTML
       text-decoration: underline;
     }
     footer {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       margin-top: 2rem;
       padding-top: 1rem;
       padding-bottom: 1rem;
@@ -97,15 +112,21 @@ html_content = <<-HTML
 <body>
 HTML
 
+html_content += <<-CONTAINER
+<div class="container">
+CONTAINER
+
 # Sort weeks in reverse chronological order
 total_weeks = entries_by_week.keys.length
-entries_by_week.keys.sort.reverse.each.with_index do |week, index|
+entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
+  week_num, year, first_day = week_data
   html_content += <<-WEEK_GROUP
   <div class="week-group">
-    <h2 class="week-header">##{total_weeks - index} - #{week}</h2>
-    <!-- <div class="metadata"> -->
-    <!--  <span class="date">Date range: #{entries_by_week[week].first['date']} - #{entries_by_week[week].last['date']}</span> -->
-    <!-- </div> -->
+    <h2 class="week-header">##{total_weeks - index} - Week #{week_num} of #{year}</h2>
+    <div class="metadata">
+      <span class="calendar"></span>
+      <span class="date">#{first_day}</span>
+    </div>
   WEEK_GROUP
 
   html_content += <<-WEEK_ENTRIES
@@ -113,7 +134,7 @@ entries_by_week.keys.sort.reverse.each.with_index do |week, index|
   WEEK_ENTRIES
 
   # Sort entries within each week by date (newest first)
-  entries_by_week[week].sort_by { |entry| entry['date'] }.reverse.each do |entry|
+  entries_by_week[week_data].sort_by { |entry| entry['date'] }.reverse.each do |entry|
     html_content += <<-ENTRY
     <li class="entry">
       <div class="title">
@@ -127,10 +148,14 @@ entries_by_week.keys.sort.reverse.each.with_index do |week, index|
   html_content += "</div>\n"
 end
 
+html_content += <<-END_CONTAINER
+</div>
+END_CONTAINER
+
 html_content += <<-FOOTER
 <footer>
-<p>&copy; #{Time.now.year} Peter Cheng</p>
-<p>Built with #{version} at #{Time.now}</p>
+  <p>&copy; #{Time.now.year} Peter Cheng</p>
+  <p>Built with #{version} at #{Time.now}</p>
 </footer>
 FOOTER
 
