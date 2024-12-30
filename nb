@@ -92,9 +92,9 @@ html_content = <<-HTML
     .entry:last-child {
       padding-bottom: 0.25rem;
     }
-    .metadata > .date {
-      color: #666;
+    .metadata > .first-day-of-week {
       font-size: 0.9em;
+      color: #666;
     }
     .title {
       font-size: 1.2em;
@@ -138,8 +138,10 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
   <div class="week-group">
     <h2 class="week-header">##{total_weeks - index} - Week #{week_num} of #{year}</h2>
     <div class="metadata">
-      <span class="icon"></span>
-      <span class="date">#{first_day}</span>
+      <div class="first-day-of-week">
+        <span class="icon"></span>
+        <span class="date">#{first_day}</span>
+      </div>
     </div>
   WEEK_GROUP
 
