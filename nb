@@ -207,7 +207,7 @@ Dir.mkdir(OUTPUT_DIR) unless Dir.exist?(OUTPUT_DIR)
 
 # Write the HTML file
 File.write("./#{OUTPUT_DIR}/index.html", html_content)
-puts "HTML file has been generated as './build/index.html'"
+puts "HTML file has been generated as './#{OUTPUT_DIR}/index.html'"
 
 end_time = Time.now
 duration = end_time - start_time
