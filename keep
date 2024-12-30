@@ -5,7 +5,8 @@ require "json"
 
 MAJOR = 1
 MINOR = 0
-PATCH = 0
+PATCH = 1
+OUTPUT_DIR = 'public'
 
 def version
   return "#{MAJOR}.#{MINOR}.#{PATCH}"
@@ -165,10 +166,10 @@ html_content += <<-HTML
 HTML
 
 # First make sure the build directory exists
-Dir.mkdir('build') unless Dir.exist?('build')
+Dir.mkdir(OUTPUT_DIR) unless Dir.exist?(OUTPUT_DIR)
 
 # Write the HTML file
-File.write('./build/index.html', html_content)
+File.write("./#{OUTPUT_DIR}/index.html", html_content)
 puts "HTML file has been generated as './build/index.html'"
 
 end_time = Time.now
