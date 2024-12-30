@@ -69,7 +69,7 @@ html_content = <<-HTML
     .week-group > .metadata {
       font-size: 1em;
     }
-    .week-group > .metadata > .calendar {
+    .icon {
       margin-right: 0.2rem;
     }
     .week-header {
@@ -86,7 +86,7 @@ html_content = <<-HTML
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
     }
-    .date {
+    .metadata > .date {
       color: #666;
       font-size: 0.9em;
     }
@@ -109,14 +109,11 @@ html_content = <<-HTML
       text-align: center;
       color: #a1a1a1;
     }
-    footer > #copyright {
+    #copyright {
       margin: 0.5rem;
     }
     #build-info > #version {
       margin-right: 0.5rem;
-    }
-    #build-info > #build-time {
-      margin-right: 0.2rem;
     }
   </style>
 </head>
@@ -135,7 +132,7 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
   <div class="week-group">
     <h2 class="week-header">##{total_weeks - index} - Week #{week_num} of #{year}</h2>
     <div class="metadata">
-      <span class="calendar"></span>
+      <span class="icon"></span>
       <span class="date">#{first_day}</span>
     </div>
   WEEK_GROUP
@@ -166,11 +163,12 @@ END_CONTAINER
 html_content += <<-FOOTER
 <footer>
   <div id="copyright">
-    &copy; #{Time.now.year} Peter Cheng
+    <span class="icon"></span>
+    <span>#{Time.now.year} Peter Cheng</span>
   </div>
   <div id="build-info">
     <span id="version"> v#{version}</span>
-    <span id="build-time"></span>
+    <span class="icon"></span>
     <time>#{Time.now.strftime("%b %-d, %Y, %l:%M %p %Z")}</time>
   </div>
 </footer>
