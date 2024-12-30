@@ -1,5 +1,17 @@
 # Change Log
 
+## v1.2.0 - 2024-12-30
+
+### New features
+
+- Updated the installation and build steps to incorporate gems.
+- Added `redcarpet` as a dependency to allow for the use of Markdown syntax in `data.json`.
+- Refactored the Vercel build steps into `vercel.json`.
+
+### Bug fixes
+
+- Fix font color of the calendar icon in the metadata of a group of entries.
+
 ## v1.1.0 - 2024-12-30
 
 - Separate links of each week into different sections styled by CSS.

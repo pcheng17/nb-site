@@ -1,0 +1,5 @@
+{
+  "buildCommand": "./nb",
+  "installCommand": "gem install bundler && bundle install",
+  "outputDirectory": "public"
+}
