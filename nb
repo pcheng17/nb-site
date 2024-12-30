@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "date"
+require "erb"
 require "json"
 
 MAJOR = 1
@@ -33,168 +34,12 @@ entries = JSON.parse(json_data)
 
 # Group entries by week
 entries_by_week = entries.group_by { |entry| get_week_identifier(entry['date']) }
-
-# Create HTML content
-html_content = <<-HTML
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="weekly-version" content="#{version}">
-  <meta name="generated-at" content="#{generated}">
-  <title>nb.petercheng.me</title>
-  <style>
-    body {
-      background-color: rgb(253, 246, 227);
-      font-family: monospace;
-      line-height: 1.6;
-      margin: 0;
-    }
-    .container {
-      background-color: rgb(255, 253, 245);
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0rem 1rem 0rem 1rem;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    .week-group {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #eee;
-    }
-    .week-group:last-child {
-      border-bottom: none;
-    }
-    .week-group > .metadata {
-      font-size: 1em;
-    }
-    .icon {
-      margin-right: 0.2rem;
-    }
-    .week-header {
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .entry_list {
-      margin: 0;
-      padding: 0;
-      list-style-type: none;
-      padding-left: 0;
-    }
-    .entry {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
-    }
-    .metadata > .date {
-      color: #666;
-      font-size: 0.9em;
-    }
-    .title {
-      font-size: 1.2em;
-    }
-    a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      font-size: 0.7rem;
-      margin-top: 2rem;
-      margin-bottom: 2rem;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      text-align: center;
-      color: #a1a1a1;
-    }
-    #copyright {
-      margin: 0.5rem;
-    }
-    #build-info > #version {
-      margin-right: 0.5rem;
-    }
-  </style>
-</head>
-<body>
-HTML
-
-html_content += <<-CONTAINER
-<div class="container">
-CONTAINER
-
-# Sort weeks in reverse chronological order
 total_weeks = entries_by_week.keys.length
-entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
-  week_num, year, first_day = week_data
-  html_content += <<-WEEK_GROUP
-  <div class="week-group">
-    <h2 class="week-header">##{total_weeks - index} - Week #{week_num} of #{year}</h2>
-    <div class="metadata">
-      <span class="icon"></span>
-      <span class="date">#{first_day}</span>
-    </div>
-  WEEK_GROUP
 
-  html_content += <<-WEEK_ENTRIES
-  <ul class="entry_list">
-  WEEK_ENTRIES
-
-  # Sort entries within each week by date (newest first)
-  entries_by_week[week_data].sort_by { |entry| entry['date'] }.reverse.each do |entry|
-    html_content += <<-ENTRY
-    <li class="entry">
-      <div class="title">
-        <a href="#{entry['url']}">#{entry['title']}</a>
-      </div>
-      <div class="description">#{entry['description']}</div>
-    </li>
-    ENTRY
-  end
-  html_content += "</ul>\n"
-  html_content += "</div>\n"
-end
-
-html_content += <<-END_CONTAINER
-</div>
-END_CONTAINER
-
-html_content += <<-FOOTER
-<footer>
-  <div id="copyright">
-    <span class="icon"></span>
-    <span>#{Time.now.year} Peter Cheng</span>
-  </div>
-  <div id="build-info">
-    <span id="version"> v#{version}</span>
-    <span class="icon"></span>
-    <time data-utc="#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%S.%LZ")}" class="local-time"></time>
-  </div>
-</footer>
-FOOTER
-
-html_content += <<-SCRIPTS
-<script>
-  document.querySelectorAll('.local-time').forEach(timeElement => {
-    const utcDate = new Date(timeElement.dataset.utc);
-    timeElement.textContent = utcDate.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-      timeZoneName: 'short'
-    });
-  });
-</script>
-SCRIPTS
-
-html_content += <<-HTML
-</body>
-</html>
-HTML
+# Read and process the template
+template = File.read('template.html.erb')
+renderer = ERB.new(template)
+html_content = renderer.result(binding)
 
 # First make sure the build directory exists
 Dir.mkdir(OUTPUT_DIR) unless Dir.exist?(OUTPUT_DIR)
