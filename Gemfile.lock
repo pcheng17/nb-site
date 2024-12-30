@@ -4,10 +4,11 @@ GEM
     redcarpet (3.6.0)
 
 PLATFORMS
+  arm64-darwin-24
   ruby
 
 DEPENDENCIES
   redcarpet
 
 BUNDLED WITH
-   1.17.2
+   2.6.2
