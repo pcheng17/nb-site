@@ -70,7 +70,8 @@ html_content = <<-HTML
       border-radius: 10px;
     }
     .week-group > .metadata {
-      padding-top: 0.5rem;
+      padding-top: 0.3rem;
+      padding-bottom: 0.3rem;
       font-size: 1em;
     }
     .icon {
@@ -88,8 +89,8 @@ html_content = <<-HTML
       padding-left: 0;
     }
     .entry {
-      padding-top: 0.75rem;
-      padding-bottom: 0.75rem;
+      padding-top: 0.6rem;
+      padding-bottom: 0.6rem;
     }
     .entry p {
       margin: 0;
