@@ -68,15 +68,16 @@ html_content = <<-HTML
       border-radius: 10px;
     }
     .week-group > .metadata {
-      margin-top: 0.5rem;
+      padding-top: 0.5rem;
       font-size: 1em;
     }
     .icon {
       margin-right: 0.2rem;
     }
     .week-header {
-      margin-top: 0.25rem;
-      margin-bottom: 0.25rem;
+      margin: 0;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
     }
     .entry_list {
       margin: 0;
@@ -87,6 +88,9 @@ html_content = <<-HTML
     .entry {
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
+    }
+    .entry:last-child {
+      padding-bottom: 0.25rem;
     }
     .metadata > .date {
       color: #666;
