@@ -2,14 +2,13 @@
 
 require "date"
 require "json"
+require "redcarpet"
 
-MAJOR = 1
-MINOR = 1
-PATCH = 0
+VERSION = '1.2.0'
 OUTPUT_DIR = 'public'
 
 def version
-  return "#{MAJOR}.#{MINOR}.#{PATCH}"
+  return "#{VERSION}"
 end
 
 def generated
@@ -38,6 +37,8 @@ entries = JSON.parse(json_data)
 # Group entries by week
 entries_by_week = entries.group_by { |entry| get_week_identifier(entry['date']) }
 
+markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+
 # Create HTML content
 html_content = <<-HTML
 <!DOCTYPE html>
@@ -47,6 +48,7 @@ html_content = <<-HTML
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="weekly-version" content="#{version}">
   <meta name="generated-at" content="#{generated}">
+  <base target="_blank">
   <title>nb.petercheng.me</title>
   <style>
     body {
@@ -89,6 +91,9 @@ html_content = <<-HTML
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
     }
+    .entry p {
+      margin: 0;
+    }
     .entry:last-child {
       padding-bottom: 0.25rem;
     }
@@ -102,6 +107,7 @@ html_content = <<-HTML
     a {
       color: #0066cc;
       text-decoration: none;
+      target-new: tab;
     }
     a:hover {
       text-decoration: underline;
@@ -156,7 +162,9 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
       <div class="title">
         <a href="#{entry['url']}">#{entry['title']}</a>
       </div>
-      <div class="description">#{entry['description']}</div>
+      <div class="description">
+        #{markdown.render(entry['description'])}
+      </div>
     </li>
     ENTRY
   end
