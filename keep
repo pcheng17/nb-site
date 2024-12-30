@@ -5,7 +5,7 @@ require "json"
 
 MAJOR = 1
 MINOR = 0
-PATCH = 2
+PATCH = 3
 OUTPUT_DIR = 'public'
 
 def version
@@ -169,10 +169,27 @@ html_content += <<-FOOTER
   <div id="build-info">
     <span id="version"> v#{version}</span>
     <span class="icon"></span>
-    <time>#{Time.now.strftime("%b %-d, %Y, %l:%M %p %Z")}</time>
+    <time data-utc="#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%S.%LZ")}" class="local-time"></time>
   </div>
 </footer>
 FOOTER
+
+html_content += <<-SCRIPTS
+<script>
+  document.querySelectorAll('.local-time').forEach(timeElement => {
+    const utcDate = new Date(timeElement.dataset.utc);
+    timeElement.textContent = utcDate.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZoneName: 'short'
+    });
+  });
+</script>
+SCRIPTS
 
 html_content += <<-HTML
 </body>

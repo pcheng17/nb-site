@@ -1,5 +1,9 @@
 # Change Log
 
+## v1.0.3 - 2024-12-30
+
+- Use JavaScript to always show the build time in the local timezone
+
 ## v1.0.2 - 2024-12-30
 
 - Make the version number and build date prettier
