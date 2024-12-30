@@ -1,5 +1,5 @@
 {
-  "build": "./nb",
+  "buildCommand": "./nb",
   "installCommand": "gem install bundler && bundle install",
   "framework": "ruby",
   "outputDirectory": "public"
