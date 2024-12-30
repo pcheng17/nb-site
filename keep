@@ -43,7 +43,7 @@ html_content = <<-HTML
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="weekly-version" content="#{version}">
   <meta name="generated-at" content="#{generated}">
-  <title>Weekly Resources</title>
+  <title>Keep - Peter Cheng</title>
   <style>
     body {
       background-color: rgb(253, 246, 227);
