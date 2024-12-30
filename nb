@@ -4,8 +4,8 @@ require "date"
 require "json"
 
 MAJOR = 1
-MINOR = 0
-PATCH = 3
+MINOR = 1
+PATCH = 0
 OUTPUT_DIR = 'public'
 
 def version
@@ -17,12 +17,16 @@ def generated
 end
 
 # Helper function to get week identifier (year-week)
+# TODO Need to handle edge cases where the week crosses over to the next year
+# Currently, this only works for 2024-2025
+# TODO add unit tests for this
 def get_week_identifier(date_str)
   date = Date.parse(date_str)
-  year = date.year
   first_day_of_week = date - date.wday
-  week_num = date.strftime('%V').to_i
-  [week_num, year, first_day_of_week.strftime('%b %d, %Y')]
+  last_day_of_week = first_day_of_week + 6
+  week_num = last_day_of_week.strftime('%V').to_i
+  year = last_day_of_week.year
+  [first_day_of_week.strftime('%b %d, %Y'), week_num, year]
 end
 
 start_time = Time.now
@@ -57,12 +61,11 @@ html_content = <<-HTML
       padding: 0rem 1rem 0rem 1rem;
     }
     .week-group {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #eee;
-    }
-    .week-group:last-child {
-      border-bottom: none;
+      margin: 1rem 0;
+      background-color: rgb(255, 253, 245);
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
     }
     .week-group > .metadata {
       font-size: 1em;
@@ -125,7 +128,7 @@ CONTAINER
 # Sort weeks in reverse chronological order
 total_weeks = entries_by_week.keys.length
 entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
-  week_num, year, first_day = week_data
+  first_day, week_num, year = week_data
   html_content += <<-WEEK_GROUP
   <div class="week-group">
     <h2 class="week-header">##{total_weeks - index} - Week #{week_num} of #{year}</h2>

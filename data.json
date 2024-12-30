@@ -19,5 +19,12 @@
         "title": "Cool colorscheme",
         "description": "I really like the colorscheme of this blog, maybe I'll take inspiration from it.",
         "tags": ["design", "colorscheme"]
+    },
+    {
+        "date": "2024-12-30",
+        "url": "https://www.nerdfonts.com/cheat-sheet",
+        "title": "Nerd Fonts Cheat Sheet",
+        "description": "I really like the icons provided here. At the time of writing this, I use a few icons in my tmux and neovim setups.",
+        "tags": ["design", "fonts"]
     }
 ]

@@ -1,5 +1,10 @@
 # Change Log
 
+## v1.1.0 - 2024-12-30
+
+- Separate links of each week into different sections styled by CSS.
+- Temporary patch for the week-counting logic to handle the turn of the new year, 2024 to 2025.
+
 ## v1.0.3 - 2024-12-30
 
 - Use JavaScript to always show the build time in the local timezone
