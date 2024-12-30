@@ -1,10 +1,14 @@
-# Changelog
+# Change Log
 
-## v1.0.1
+## v1.0.2 - 2024-12-30
+
+- Make the version number and build date prettier
+
+## v1.0.1 - 2024-12-30
 
 - Rename the output directory from `build` to `public`
 
-## v1.0.0
+## v1.0.0 - 2024-12-30
 
 Initial release, with the following features:
 

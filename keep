@@ -5,7 +5,7 @@ require "json"
 
 MAJOR = 1
 MINOR = 0
-PATCH = 1
+PATCH = 2
 OUTPUT_DIR = 'public'
 
 def version
@@ -103,10 +103,20 @@ html_content = <<-HTML
     footer {
       font-size: 0.7rem;
       margin-top: 2rem;
+      margin-bottom: 2rem;
       padding-top: 1rem;
       padding-bottom: 1rem;
       text-align: center;
       color: #a1a1a1;
+    }
+    footer > #copyright {
+      margin: 0.5rem;
+    }
+    #build-info > #version {
+      margin-right: 0.5rem;
+    }
+    #build-info > #build-time {
+      margin-right: 0.2rem;
     }
   </style>
 </head>
@@ -155,8 +165,14 @@ END_CONTAINER
 
 html_content += <<-FOOTER
 <footer>
-  <p>&copy; #{Time.now.year} Peter Cheng</p>
-  <p>Built with #{version} at #{Time.now}</p>
+  <div id="copyright">
+    &copy; #{Time.now.year} Peter Cheng
+  </div>
+  <div id="build-info">
+    <span id="version"> v#{version}</span>
+    <span id="build-time"></span>
+    <time>#{Time.now.strftime("%b %-d, %Y, %l:%M %p %Z")}</time>
+  </div>
 </footer>
 FOOTER
 
