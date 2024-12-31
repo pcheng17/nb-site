@@ -179,6 +179,38 @@ html_content = <<-HTML
     #build-info > #version-info {
       margin-right: 0.5rem;
     }
+    .share-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 0.2rem;
+      color: #666;
+      font-size: 1.2em;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      position: relative;
+      top: -1px;
+    }
+    .share-button:hover {
+      opacity: 1;
+    }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -211,8 +243,17 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
   entries_by_week[week_data].sort_by { |entry| entry['date'] }.reverse.each do |entry|
     html_content += <<-ENTRY
     <li class="entry">
-      <div class="title">
-        <a href="#{entry['url']}">#{entry['title']}</a>
+      <div class="entry-header">
+        <span class="title">
+          <a href="#{entry['url']}">#{entry['title']}</a>
+        </span>
+        <button class="share-button"
+                onclick="shareEntry(this)"
+                data-url="#{entry['url']}"
+                data-title="#{entry['title'].gsub('"', '&quot;')}"
+                data-description="#{entry['description'].gsub('"', '&quot;')}">
+          <i class="nf nf-oct-share"></i>
+        </button>
       </div>
       <div class="description">
         #{markdown.render(entry['description'])}
@@ -261,6 +302,54 @@ html_content += <<-SCRIPTS
   });
 </script>
 SCRIPTS
+
+html_content += <<-SHARE_SCRIPT
+<script>
+  function shareEntry(button) {
+    const url = button.dataset.url;
+    const title = button.dataset.title;
+    const description = button.dataset.description;
+
+    // Format the share text
+    const shareText = `${title}\n${url}\n\n${description}`;
+
+    // Check if Web Share API is available
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        text: description,
+        url: url
+      }).catch(console.error);
+    } else {
+      // Fallback to clipboard copy
+      navigator.clipboard.writeText(shareText).then(() => {
+        showToast('Copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        showToast('Failed to copy to clipboard');
+      });
+    }
+  }
+
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Trigger reflow to ensure the transition works
+    toast.offsetHeight;
+    toast.classList.add('show');
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 2000);
+  }
+</script>
+SHARE_SCRIPT
+
+
 
 html_content += <<-HTML
 </body>
