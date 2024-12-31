@@ -260,17 +260,6 @@ html_content += <<-SCRIPTS
     });
   });
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const icon = document.querySelector('.nf-oct-calendar');
-        console.log('Icon computed style:', window.getComputedStyle(icon, ':before').content);
-
-        // Check if font is loaded
-        document.fonts.ready.then(function() {
-            console.log('Fonts loaded:', document.fonts.check('1em "Font Awesome 6 Free"'));
-        });
-    });
-</script>
 SCRIPTS
 
 html_content += <<-HTML
