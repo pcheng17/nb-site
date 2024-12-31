@@ -1,5 +1,11 @@
 # Change Log
 
+## v.1.2.1 - 2024-12-30
+
+### Bug fixes
+
+- Load font and nerd font from CDN so fonts and icons are consistent across platforms and devices.
+
 ## v1.2.0 - 2024-12-30
 
 ### New features
