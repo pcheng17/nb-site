@@ -1,5 +1,11 @@
 # Change Log
 
+## v.1.2.2 - 2024-12-30
+
+### New features
+
+- Responsive CSS for small screen sizes only
+
 ## v.1.2.1 - 2024-12-30
 
 ### Bug fixes
