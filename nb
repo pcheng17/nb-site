@@ -139,7 +139,7 @@ html_content = <<-HTML
     #copyright {
       margin: 0.5rem;
     }
-    #build-info > #version {
+    #build-info > #version-info {
       margin-right: 0.5rem;
     }
   </style>
@@ -198,8 +198,9 @@ html_content += <<-FOOTER
     <span>#{Time.now.year} Peter Cheng</span>
   </div>
   <div id="build-info">
-    <span id="version">
-      <i class="nf nf-oct-tag"></i>v#{version}
+    <span id="version-info">
+      <i class="nf nf-oct-tag"></i>
+      <span class="version-number">v#{version}</span>
     </span>
     <i class="nf nf-fa-clock"></i>
     <time data-utc="#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%S.%LZ")}" class="local-time"></time>
