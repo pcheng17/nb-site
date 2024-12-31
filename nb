@@ -4,7 +4,7 @@ require "date"
 require "json"
 require "redcarpet"
 
-VERSION = '1.2.2'
+VERSION = '1.2.3'
 OUTPUT_DIR = 'public'
 
 def version
@@ -26,6 +26,13 @@ def get_week_identifier(date_str)
   week_num = last_day_of_week.strftime('%V').to_i
   year = last_day_of_week.year
   [first_day_of_week.strftime('%b %d, %Y'), week_num, year]
+end
+
+def link(entry, target: nil)
+  target_attr = target ? ' target="_blank"' : ''
+  <<~HTML
+    <a href="#{entry['url']}"#{target_attr}>#{entry['title']}</a>
+  HTML
 end
 
 start_time = Time.now
@@ -60,20 +67,13 @@ html_content = <<-HTML
       line-height: 1.5;
       margin: 0;
     }
-    @media (max-width: 480px) {
-      body {
-        font-size: 0.7rem;
-      }
+    header {
+      margin: 1rem 0;
     }
     .container {
       max-width: 800px;
       margin: 0 auto;
       padding: 0rem 1rem 0rem 1rem;
-    }
-    @media (max-width: 480px) {
-      .container {
-        padding: 0rem 0.5rem 0rem 0.5rem;
-      }
     }
     .week-group {
       margin: 1rem 0;
@@ -82,19 +82,8 @@ html_content = <<-HTML
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
     }
-    @media (max-width: 480px) {
-      .week-group {
-        margin: 0.5rem 0;
-        padding: 0.5rem;
-      }
-    }
     .metadata {
       padding: 0.3rem 0;
-    }
-    @media (max-width: 480px) {
-      .metadata {
-        padding: 0.2rem 0;
-      }
     }
     .icon {
       margin-right: 0.2rem;
@@ -109,26 +98,18 @@ html_content = <<-HTML
       padding: 0.25rem 0;
       font-size: 1.6em;
     }
-    @media (max-width: 480px) {
-      .week-header {
-        padding: 0.1rem 0;
-      }
-    }
     .entry_list {
       margin: 0;
       padding: 0;
       list-style-type: none;
       padding-left: 0;
     }
+    .title {
+      font-size: 1.2em;
+    }
     .entry {
       padding-top: 0.6rem;
       padding-bottom: 0.6rem;
-    }
-    @media (max-width: 480px) {
-      .entry {
-        padding-top: 0.4rem;
-        padding-bottom: 0.4rem;
-      }
     }
     .entry p {
       margin: 0;
@@ -136,25 +117,12 @@ html_content = <<-HTML
     .entry:first-child {
       padding-top: 0.6rem;
     }
-    @media (max-width: 480px) {
-      .entry:first-child {
-        padding-top: 0.4rem;
-      }
-    }
     .entry:last-child {
       padding-bottom: 0.25rem;
-    }
-    @media (max-width: 480px) {
-      .entry:last-child {
-        padding-bottom: 0.1rem;
-      }
     }
     .metadata > .first-day-of-week {
       font-size: 0.9em;
       color: #666;
-    }
-    .title {
-      font-size: 1.2em;
     }
     a {
       color: #0066cc;
@@ -179,6 +147,49 @@ html_content = <<-HTML
     #build-info > #version-info {
       margin-right: 0.5rem;
     }
+    nav {
+      display: flex;
+      justify-content: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      color: #0066cc;
+      text-decoration: none;
+    }
+    @media (max-width: 480px) {
+      body {
+        font-size: 0.7rem;
+      }
+      header {
+        margin: 0.5rem 0;
+      }
+      .container {
+        padding: 0rem 0.5rem 0rem 0.5rem;
+      }
+      .week-group {
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+      }
+      .week-header {
+        padding: 0.1rem 0;
+      }
+      .metadata {
+        padding: 0.2rem 0;
+      }
+      .entry {
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+      }
+      .entry:first-child {
+        padding-top: 0.4rem;
+      }
+      .entry:last-child {
+        padding-bottom: 0.1rem;
+      }
+      nav a {
+        margin: 0 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -187,6 +198,15 @@ HTML
 html_content += <<-CONTAINER
 <div class="container">
 CONTAINER
+
+# html_content += <<-HEADER
+# <header>
+#   <nav>
+#     #{link({'title' => 'Bookmarks', 'url' => './'}, target: false)}
+#     #{link({'title' => 'Notes', 'url' => './notes'}, target: false)}
+#   </nav>
+# </header>
+# HEADER
 
 # Sort weeks in reverse chronological order
 total_weeks = entries_by_week.keys.length
@@ -212,7 +232,7 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
     html_content += <<-ENTRY
     <li class="entry">
       <div class="title">
-        <a href="#{entry['url']}">#{entry['title']}</a>
+        #{link(entry, target: true)}
       </div>
       <div class="description">
         #{markdown.render(entry['description'])}

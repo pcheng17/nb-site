@@ -1,5 +1,11 @@
 # Change Log
 
+## v.1.2.3 - 2024-12-30
+
+### Maintenance
+
+- Refactored and cleaned up the CSS by combining all `@media` entries into one
+
 ## v.1.2.2 - 2024-12-30
 
 ### New features
