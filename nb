@@ -4,7 +4,7 @@ require "date"
 require "json"
 require "redcarpet"
 
-VERSION = '1.2.0'
+VERSION = '1.2.1'
 OUTPUT_DIR = 'public'
 
 def version
@@ -49,11 +49,14 @@ html_content = <<-HTML
   <meta name="weekly-version" content="#{version}">
   <meta name="generated-at" content="#{generated}">
   <base target="_blank">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css">
+  <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css">
   <title>nb.petercheng.me</title>
   <style>
     body {
       background-color: rgb(250, 245, 230);
-      font-family: monospace;
+      font-family: JetBrains Mono;
+      font-size: 0.8rem;
       line-height: 1.5;
       margin: 0;
     }
@@ -79,6 +82,11 @@ html_content = <<-HTML
     }
     .icon {
       margin-right: 0.2rem;
+    }
+    i.nf {
+      margin: 0;
+      position: relative;
+      top: -1px;
     }
     .week-header {
       margin: 0;
@@ -131,7 +139,7 @@ html_content = <<-HTML
     #copyright {
       margin: 0.5rem;
     }
-    #build-info > #version {
+    #build-info > #version-info {
       margin-right: 0.5rem;
     }
   </style>
@@ -152,7 +160,7 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
     <h2 class="week-header">##{total_weeks - index} - Week #{week_num} of #{year}</h2>
     <div class="metadata">
       <div class="first-day-of-week">
-        <span class="icon"></span>
+        <i class="nf nf-oct-calendar"></i>
         <span class="date">#{first_day}</span>
       </div>
     </div>
@@ -186,12 +194,15 @@ END_CONTAINER
 html_content += <<-FOOTER
 <footer>
   <div id="copyright">
-    <span class="icon"></span>
+    <i class="nf nf-fa-copyright"></i>
     <span>#{Time.now.year} Peter Cheng</span>
   </div>
   <div id="build-info">
-    <span id="version"> v#{version}</span>
-    <span class="icon"></span>
+    <span id="version-info">
+      <i class="nf nf-oct-tag"></i>
+      <span class="version-number">v#{version}</span>
+    </span>
+    <i class="nf nf-fa-clock"></i>
     <time data-utc="#{Time.now.utc.strftime("%Y-%m-%dT%H:%M:%S.%LZ")}" class="local-time"></time>
   </div>
 </footer>
@@ -211,6 +222,17 @@ html_content += <<-SCRIPTS
       timeZoneName: 'short'
     });
   });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const icon = document.querySelector('.nf-oct-calendar');
+        console.log('Icon computed style:', window.getComputedStyle(icon, ':before').content);
+
+        // Check if font is loaded
+        document.fonts.ready.then(function() {
+            console.log('Fonts loaded:', document.fonts.check('1em "Font Awesome 6 Free"'));
+        });
+    });
 </script>
 SCRIPTS
 
