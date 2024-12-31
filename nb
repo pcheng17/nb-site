@@ -38,7 +38,7 @@ end
 start_time = Time.now
 
 # Read the JSON file
-json_data = File.read('data.json')
+json_data = File.read('./data/bookmarks.json')
 entries = JSON.parse(json_data)
 
 # Group entries by week
