@@ -60,14 +60,11 @@ html_content = <<-HTML
     .container {
       max-width: 800px;
       margin: 0 auto;
-      padding: 0rem 1rem 0rem 1rem;
+      padding: 1rem;
     }
     .week-group {
-      margin: 1rem 0;
-      background-color: rgb(255, 253, 245);
-      padding: 1rem;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
+      padding: 1rem 0rem;
+      border-bottom: 1px solid #ddd;
     }
     .week-header {
       font-size: 1.3rem;
