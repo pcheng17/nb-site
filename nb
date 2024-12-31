@@ -49,6 +49,8 @@ html_content = <<-HTML
   <meta name="weekly-version" content="#{version}">
   <meta name="generated-at" content="#{generated}">
   <base target="_blank">
+  <link rel="preload" href="https://www.nerdfonts.com/assets/css/webfont.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css"></noscript>
   <title>nb.petercheng.me</title>
   <style>
     body {
@@ -152,7 +154,9 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
     <h2 class="week-header">##{total_weeks - index} - Week #{week_num} of #{year}</h2>
     <div class="metadata">
       <div class="first-day-of-week">
-        <span class="icon"></span>
+        <span class="icon">
+          <i class="nf-oct-calendar"></i>
+        </span>
         <span class="date">#{first_day}</span>
       </div>
     </div>
