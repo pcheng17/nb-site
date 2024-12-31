@@ -89,11 +89,14 @@ html_content = <<-HTML
       padding-left: 0;
     }
     .entry {
-      padding-top: 0.6rem;
-      padding-bottom: 0.6rem;
+      padding-top: 0.7rem;
+      padding-bottom: 0.7rem;
     }
     .entry p {
       margin: 0;
+    }
+    .entry:first-child {
+      padding-top: 0.6rem;
     }
     .entry:last-child {
       padding-bottom: 0.25rem;
