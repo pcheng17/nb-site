@@ -1,5 +1,12 @@
 [
     {
+        "date": "2025-01-02",
+        "url": "https://github.com/hoarder-app/hoarder",
+        "title": "Hoarder - A self-hostable bookmark-everything app",
+        "description": "I've been searching for ways to unify my bookmarks across all my devices, and this seems to be a pretty promising solution. In fact, this very goal of wanting to unify where I save my links/bookmarks for easy retrieval is why I decided to build this webpage for saving/sharing links. I also have been wanting to learn how to self-host services - screw relying on SAAS. This seems easy enough, and also extremely useful for me.",
+        "tags": ["github", "self-hosted"]
+    },
+    {
         "date": "2024-12-30",
         "url": "https://www.nerdfonts.com/cheat-sheet",
         "title": "Nerd Fonts Cheat Sheet",
