@@ -4,7 +4,7 @@ require "date"
 require "json"
 require "redcarpet"
 
-VERSION = '1.2.3'
+VERSION = '1.3.0'
 OUTPUT_DIR = 'public'
 
 def version
@@ -28,10 +28,18 @@ def get_week_identifier(date_str)
   [first_day_of_week.strftime('%b %d, %Y'), week_num, year]
 end
 
+def slugify(text)
+  text.downcase.strip
+    .gsub(' ', '-')
+    .gsub(/[^\w-]/, '')
+    .gsub(/-+/, '-')
+    .gsub(/^-+|-+$/, '')
+end
+
 def link(entry, target: nil)
   target_attr = target ? ' target="_blank"' : ''
   <<~HTML
-    <a href="#{entry['url']}"#{target_attr}>#{entry['title']}</a>
+    <a href="#{entry['url']}" id="#{entry['slug']}" #{target_attr}>#{entry['title']}</a>
   HTML
 end
 
@@ -40,6 +48,18 @@ start_time = Time.now
 # Read the JSON file
 json_data = File.read('./data/bookmarks.json')
 entries = JSON.parse(json_data)
+
+# De-duplicate slugs since titles may not be unique
+slug_counts = Hash.new(0)
+entries.each do |entry|
+  base_slug = slugify(entry['title'])
+  slug_counts[base_slug] += 1
+  if slug_counts[base_slug] == 1
+    entry['slug'] = base_slug
+  else
+    entry['slug'] = "#{base_slug}-#{slug_counts[base_slug]-1}"
+  end
+end
 
 # Group entries by week
 entries_by_week = entries.group_by { |entry| get_week_identifier(entry['date']) }
@@ -55,7 +75,6 @@ html_content = <<-HTML
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="weekly-version" content="#{version}">
   <meta name="generated-at" content="#{generated}">
-  <base target="_blank">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css">
   <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css">
   <title>nb.petercheng.me</title>
@@ -63,7 +82,7 @@ html_content = <<-HTML
     body {
       background-color: rgb(250, 245, 230);
       font-family: JetBrains Mono;
-      font-size: 0.8rem;
+      font-size: 14px;
       line-height: 1.5;
       margin: 0;
     }
@@ -83,7 +102,9 @@ html_content = <<-HTML
       border-radius: 10px;
     }
     .metadata {
-      padding-top: 0.3rem;
+      font-size: 0.9em;
+      color: #666;
+      padding-top: 0.4rem;
       padding-bottom: 0.9rem;
     }
     .icon {
@@ -98,6 +119,16 @@ html_content = <<-HTML
       margin: 0;
       padding: 0.2rem 0;
       font-size: 1.6em;
+    }
+    .link-icon {
+      color: #666;
+      font-size: 0.85em;
+    }
+    .link-icon-header {
+      color: #666;
+      font-size: 0.85em;
+      position: relative;
+      top: -2px;
     }
     .entry_list {
       margin: 0;
@@ -119,10 +150,6 @@ html_content = <<-HTML
     }
     .entry:last-child {
       padding-bottom: 0rem;
-    }
-    .metadata > .first-day-of-week {
-      font-size: 0.9em;
-      color: #666;
     }
     a {
       color: #0066cc;
@@ -158,7 +185,7 @@ html_content = <<-HTML
     }
     @media (max-width: 480px) {
       body {
-        font-size: 0.7rem;
+        font-size: 12px;
       }
       header {
         margin: 0.5rem 0;
@@ -175,8 +202,8 @@ html_content = <<-HTML
         padding: 0.1rem 0;
       }
       .metadata {
-        padding-top: 0.2rem;
-        padding-bottom: 0.6rem;
+        padding-top: 0.3rem;
+        padding-bottom: 0.7rem;
       }
       .entry {
         padding-top: 0.4rem;
@@ -210,12 +237,21 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
   first_day, week_num, year = week_data
   html_content += <<-WEEK_GROUP
   <div class="week-group">
-    <h2 class="week-header">##{total_weeks - index} - Week #{week_num} of #{year}</h2>
+    <h2 class="week-header" id="week-#{week_num}-of-#{year}">
+      ##{total_weeks - index} - Week #{week_num} of #{year}
+      <a href="#week-#{week_num}-of-#{year}" class="link-icon-header">
+        <i class="nf nf-oct-link"></i>
+      </a>
+    </h2>
     <div class="metadata">
-      <div class="first-day-of-week">
+      <span class="first-day-of-week">
         <i class="nf nf-oct-calendar"></i>
         <span class="date">#{first_day}</span>
-      </div>
+      </span>
+      //
+      <span class="entry-count">
+        <span class="count">#{entries_by_week[week_data].length} entries</span>
+      </span>
     </div>
   WEEK_GROUP
 
@@ -229,6 +265,9 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
     <li class="entry">
       <div class="title">
         #{link(entry, target: true)}
+        <a href="##{entry['slug']}" class="link-icon">
+          <i class="nf nf-oct-link"></i>
+        </a>
       </div>
       <div class="description">
         #{markdown.render(entry['description'])}

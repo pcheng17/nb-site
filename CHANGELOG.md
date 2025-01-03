@@ -1,5 +1,16 @@
 # Change Log
 
+## v.1.3.0 - 2025-01-02
+
+### New features
+
+- Added the ability to link directly to each week's listing, and also directly to each entry. This
+is to allow for me and others to share links to locations on the page.
+  - I generate slugs from the titles of each entry, but since titles may not be unique, I needed to
+    incorporate de-duplication logic when forming the slugs.
+- Added an extra little bit of metadata displaying how many entries are in each post
+- Increased font sizes for readability, and adjusted margins accordingly
+
 ## v.1.2.3 - 2024-12-30
 
 ### Maintenance
