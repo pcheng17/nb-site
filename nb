@@ -83,7 +83,8 @@ html_content = <<-HTML
       border-radius: 10px;
     }
     .metadata {
-      padding: 0.3rem 0;
+      padding-top: 0.3rem;
+      padding-bottom: 0.9rem;
     }
     .icon {
       margin-right: 0.2rem;
@@ -108,17 +109,16 @@ html_content = <<-HTML
       font-size: 1.2em;
     }
     .entry {
-      padding-top: 0.6rem;
-      padding-bottom: 0.6rem;
+      padding: 0.6rem 0;
     }
     .entry p {
       margin: 0;
     }
     .entry:first-child {
-      padding-top: 0.6rem;
+      padding-top: 0rem;
     }
     .entry:last-child {
-      padding-bottom: 0.2rem;
+      padding-bottom: 0rem;
     }
     .metadata > .first-day-of-week {
       font-size: 0.9em;
@@ -175,17 +175,12 @@ html_content = <<-HTML
         padding: 0.1rem 0;
       }
       .metadata {
-        padding: 0.2rem 0;
+        padding-top: 0.2rem;
+        padding-bottom: 0.6rem;
       }
       .entry {
         padding-top: 0.4rem;
         padding-bottom: 0.4rem;
-      }
-      .entry:first-child {
-        padding-top: 0.4rem;
-      }
-      .entry:last-child {
-        padding-bottom: 0.15rem;
       }
       nav a {
         margin: 0 0.5rem;
