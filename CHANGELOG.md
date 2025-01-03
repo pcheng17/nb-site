@@ -6,6 +6,8 @@
 
 - Added the ability to link directly to each week's listing, and also directly to each entry. This
 is to allow for me and others to share links to locations on the page.
+  - I generate slugs from the titles of each entry, but since titles may not be unique, I needed to
+    incorporate de-duplication logic when forming the slugs.
 
 ## v.1.2.3 - 2024-12-30
 
