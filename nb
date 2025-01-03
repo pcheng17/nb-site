@@ -95,7 +95,7 @@ html_content = <<-HTML
     }
     .week-header {
       margin: 0;
-      padding: 0.25rem 0;
+      padding: 0.2rem 0;
       font-size: 1.6em;
     }
     .entry_list {
@@ -118,7 +118,7 @@ html_content = <<-HTML
       padding-top: 0.6rem;
     }
     .entry:last-child {
-      padding-bottom: 0.25rem;
+      padding-bottom: 0.2rem;
     }
     .metadata > .first-day-of-week {
       font-size: 0.9em;
