@@ -8,6 +8,8 @@
 is to allow for me and others to share links to locations on the page.
   - I generate slugs from the titles of each entry, but since titles may not be unique, I needed to
     incorporate de-duplication logic when forming the slugs.
+- Added an extra little bit of metadata displaying how many entries are in each post
+- Increased font sizes for readability, and adjusted margins accordingly
 
 ## v.1.2.3 - 2024-12-30
 
