@@ -39,7 +39,7 @@ end
 def link(entry, target: nil)
   target_attr = target ? ' target="_blank"' : ''
   <<~HTML
-    <a href="#{entry['url']}" id="#{slugify(entry['title'])}" #{target_attr}>#{entry['title']}</a>
+    <a href="#{entry['url']}" id="#{entry['slug']}" #{target_attr}>#{entry['title']}</a>
   HTML
 end
 
@@ -48,6 +48,18 @@ start_time = Time.now
 # Read the JSON file
 json_data = File.read('./data/bookmarks.json')
 entries = JSON.parse(json_data)
+
+# De-duplicate slugs since titles may not be unique
+slug_counts = Hash.new(0)
+entries.each do |entry|
+  base_slug = slugify(entry['title'])
+  slug_counts[base_slug] += 1
+  if slug_counts[base_slug] == 1
+    entry['slug'] = base_slug
+  else
+    entry['slug'] = "#{base_slug}-#{slug_counts[base_slug]-1}"
+  end
+end
 
 # Group entries by week
 entries_by_week = entries.group_by { |entry| get_week_identifier(entry['date']) }
@@ -251,7 +263,7 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
     <li class="entry">
       <div class="title">
         #{link(entry, target: true)}
-        <a href="##{slugify(entry['title'])}" class="link-icon">
+        <a href="##{entry['slug']}" class="link-icon">
           <i class="nf nf-oct-link"></i>
         </a>
       </div>
