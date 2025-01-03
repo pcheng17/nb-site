@@ -102,6 +102,8 @@ html_content = <<-HTML
       border-radius: 10px;
     }
     .metadata {
+      font-size: 0.9em;
+      color: #666;
       padding-top: 0.3rem;
       padding-bottom: 0.9rem;
     }
@@ -148,10 +150,6 @@ html_content = <<-HTML
     }
     .entry:last-child {
       padding-bottom: 0rem;
-    }
-    .metadata > .first-day-of-week {
-      font-size: 0.9em;
-      color: #666;
     }
     a {
       color: #0066cc;
@@ -204,8 +202,8 @@ html_content = <<-HTML
         padding: 0.1rem 0;
       }
       .metadata {
-        padding-top: 0.2rem;
-        padding-bottom: 0.6rem;
+        padding-top: 0.25rem;
+        padding-bottom: 0.65rem;
       }
       .entry {
         padding-top: 0.4rem;
@@ -246,10 +244,14 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
       </a>
     </h2>
     <div class="metadata">
-      <div class="first-day-of-week">
+      <span class="first-day-of-week">
         <i class="nf nf-oct-calendar"></i>
         <span class="date">#{first_day}</span>
-      </div>
+      </span>
+      //
+      <span class="entry-count">
+        <span class="count">#{entries_by_week[week_data].length} entries</span>
+      </span>
     </div>
   WEEK_GROUP
 
