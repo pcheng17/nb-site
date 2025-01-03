@@ -82,7 +82,7 @@ html_content = <<-HTML
     body {
       background-color: rgb(250, 245, 230);
       font-family: JetBrains Mono;
-      font-size: 0.8rem;
+      font-size: 14px;
       line-height: 1.5;
       margin: 0;
     }
@@ -187,7 +187,7 @@ html_content = <<-HTML
     }
     @media (max-width: 480px) {
       body {
-        font-size: 0.7rem;
+        font-size: 12px;
       }
       header {
         margin: 0.5rem 0;
