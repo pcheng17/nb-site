@@ -6,7 +6,7 @@ require "date"
 require "json"
 require "redcarpet"
 
-VERSION = '1.3.0'
+VERSION = '1.3.1'
 OUTPUT_DIR = 'public'
 
 def version
@@ -244,7 +244,7 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
   <div class="week-group">
     <h2 class="week-header" id="week-#{week_num}-of-#{year}">
       ##{total_weeks - index} - Week #{week_num} of #{year}
-      <a href="#week-#{week_num}-of-#{year}" class="link-icon-header">
+      <a href="#week-#{week_num}-of-#{year}" class="link-icon-header" aria-label="Jump to section">
         <i class="nf nf-oct-link"></i>
       </a>
     </h2>
@@ -270,7 +270,7 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
     <li class="entry">
       <div class="title">
         #{link(entry, target: true)}
-        <a href="##{entry['slug']}" class="link-icon">
+        <a href="##{entry['slug']}" class="link-icon" aria-label="Jump to section">
           <i class="nf nf-oct-link"></i>
         </a>
       </div>

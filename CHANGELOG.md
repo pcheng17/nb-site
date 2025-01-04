@@ -1,5 +1,11 @@
 # Change Log
 
+## v.1.3.1 - 2025-01-04
+
+### New features
+
+- Add `aria-label` to the anchor links for accessibility
+
 ## v.1.3.0 - 2025-01-02
 
 ### New features
