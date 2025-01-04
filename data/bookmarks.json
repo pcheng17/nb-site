@@ -1,5 +1,12 @@
 [
     {
+        "date": "2025-01-03",
+        "url": "https://github.com/paperless-ngx/paperless-ngx",
+        "title": "Paperless-ngx - A self-hostable archive for physical documents",
+        "description": "I just bought a cheap machine to use as a homelab, so I'm gearing up by collecting various open-source self-hostable software that I may find useful. Being able to digitize all of my physical documents, like medical bills, car repairs, insurance, etc., would be super convenient in terms of both information-retrieval and safe-keeping. I'm excited to try this one out.",
+        "tags": ["github", "self-hosted"]
+    },
+    {
         "date": "2025-01-02",
         "url": "https://github.com/hoarder-app/hoarder",
         "title": "Hoarder - A self-hostable bookmark-everything app",
