@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require_relative 'bookmarks_db'
+require 'optparse'
+require 'json'
+
+db = setup_bookmarks_db
+bookmarks = db.get_all_bookmarks
+
+# puts JSON.pretty_generate(bookmarks)
+
+puts "\nBookmarks:"
+puts "-" * 80
+bookmarks. each do |b|
+  puts "ID: #{b['id']}"
+  puts "Title: #{b['title']}"
+  puts "URL: #{b['url']}"
+  puts "Tags: #{b['tags']}"
+  puts "Created at: #{b['created_at']}"
+  puts "Description: #{b['description']}"
+  puts "-" * 80
+end

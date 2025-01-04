@@ -1,7 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    mini_portile2 (2.8.8)
     redcarpet (3.6.0)
+    sqlite3 (2.5.0)
+      mini_portile2 (~> 2.8.0)
+    sqlite3 (2.5.0-arm64-darwin)
 
 PLATFORMS
   arm64-darwin-24
@@ -9,6 +13,7 @@ PLATFORMS
 
 DEPENDENCIES
   redcarpet
+  sqlite3
 
 BUNDLED WITH
    2.6.2

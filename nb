@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require_relative "bookmarks_db"
+
 require "date"
 require "json"
 require "redcarpet"
@@ -19,8 +21,8 @@ end
 # TODO Need to handle edge cases where the week crosses over to the next year
 # Currently, this only works for 2024-2025
 # TODO add unit tests for this
-def get_week_identifier(date_str)
-  date = Date.parse(date_str)
+def get_week_identifier(created_at)
+  date = Date.parse(created_at)
   first_day_of_week = date - date.wday
   last_day_of_week = first_day_of_week + 6
   week_num = last_day_of_week.strftime('%V').to_i
@@ -46,8 +48,11 @@ end
 start_time = Time.now
 
 # Read the JSON file
-json_data = File.read('./data/bookmarks.json')
-entries = JSON.parse(json_data)
+# json_data = File.read('./data/bookmarks.json')
+# entries = JSON.parse(json_data)
+
+db = setup_bookmarks_db
+entries = db.get_all_bookmarks
 
 # De-duplicate slugs since titles may not be unique
 slug_counts = Hash.new(0)
@@ -62,7 +67,7 @@ entries.each do |entry|
 end
 
 # Group entries by week
-entries_by_week = entries.group_by { |entry| get_week_identifier(entry['date']) }
+entries_by_week = entries.group_by { |entry| get_week_identifier(entry['created_at']) }
 
 markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 
