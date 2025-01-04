@@ -46,7 +46,7 @@ class BookmarksDB
   def migrate_json_data(json_file_path)
     # Read JSON data
     json_data = File.read(json_file_path)
-    entries = JSON.parse(json_data)
+    entries = JSON.parse(json_data).reverse # Reverse to insert in chronological order
 
     # Begin transaction for better performance
     @db.transaction do
