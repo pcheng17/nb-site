@@ -4,7 +4,7 @@ require "date"
 require "json"
 require "redcarpet"
 
-VERSION = '1.3.1'
+VERSION = '1.3.2'
 OUTPUT_DIR = 'public'
 
 def version
@@ -235,6 +235,8 @@ CONTAINER
 total_weeks = entries_by_week.keys.length
 entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
   first_day, week_num, year = week_data
+  num_entries = entries_by_week[week_data].length
+  entry_str = num_entries == 1 ? 'entry' : 'entries'
   html_content += <<-WEEK_GROUP
   <div class="week-group">
     <h2 class="week-header" id="week-#{week_num}-of-#{year}">
@@ -250,7 +252,7 @@ entries_by_week.keys.sort.reverse.each.with_index do |week_data, index|
       </span>
       //
       <span class="entry-count">
-        <span class="count">#{entries_by_week[week_data].length} entries</span>
+        <span class="count">#{num_entries} #{entry_str}</span>
       </span>
     </div>
   WEEK_GROUP

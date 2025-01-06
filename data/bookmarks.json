@@ -1,5 +1,12 @@
 [
     {
+        "date": "2025-01-05",
+        "url": "https://www.swyx.io/learn-in-public",
+        "title": "Learn in Public",
+        "description": "This is a good reminder to myself to not be scared about putting myself out there. One of my passions is teaching, or rather, being able to help and inspire others in their learning, and I very much agree with the ideas in the blog post. To be able to impact more people, I must be willing to share what I've learned. I think many people, myself included, love seeing the process by which something is achieved; sharing what I'm learning is exactly that.",
+        "tags": []
+    },
+    {
         "date": "2025-01-03",
         "url": "https://github.com/paperless-ngx/paperless-ngx",
         "title": "Paperless-ngx - A self-hostable archive for physical documents",
