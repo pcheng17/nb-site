@@ -1,5 +1,11 @@
 # Change Log
 
+## v.1.3.2 - 2025-01-05
+
+### Bug fixes
+
+- Fix the pluralization of the word "entry" in the metadata when there's only one entry
+
 ## v.1.3.1 - 2025-01-04
 
 ### New features

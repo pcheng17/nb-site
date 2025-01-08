@@ -1,5 +1,12 @@
 [
     {
+        "date": "2025-01-05",
+        "url": "https://www.swyx.io/learn-in-public",
+        "title": "Learn in Public",
+        "description": "This is a good reminder to myself to not be scared about putting myself out there. One of my passions is teaching, or rather, being able to help and inspire others in their learning, and I very much agree with the ideas in the blog post. To be able to impact more people, I must be willing to share what I've learned. I think many people, myself included, love seeing the process by which something is achieved; sharing what I'm learning is exactly that.",
+        "tags": []
+    },
+    {
         "date": "2025-01-03",
         "url": "https://github.com/paperless-ngx/paperless-ngx",
         "title": "Paperless-ngx - A self-hostable archive for physical documents",
@@ -33,12 +40,5 @@
         "title": "How to replace the battery in your AirTag",
         "description": "Apparently replacing the battery in your AirTag is super easy. tldr: it uses a [CR2032 battery](https://www.amazon.com/Amazon-Basics-CR2032-Compatible-Mercury-Free/dp/B0787K2XWZ/ref=sr_1_1_ffob_sspa?sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1).",
         "tags": ["apple", "diy"]
-    },
-    {
-        "date": "2024-12-29",
-        "url": "https://anaseto.codeberg.page/",
-        "title": "Cool colorscheme",
-        "description": "I really like the colorscheme of this blog, maybe I'll take inspiration from it.",
-        "tags": ["design", "colorscheme"]
     }
 ]
