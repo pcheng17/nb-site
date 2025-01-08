@@ -206,7 +206,7 @@ html_content = <<-HTML
       }
       .metadata {
         padding-top: 0.35rem;
-        padding-bottom: 0.7rem;
+        padding-bottom: 0.65rem;
       }
       .entry {
         padding-top: 0.4rem;
