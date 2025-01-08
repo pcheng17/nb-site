@@ -185,7 +185,7 @@ html_content = <<-HTML
     }
     @media (max-width: 480px) {
       body {
-        font-size: 12px;
+        font-size: 13px;
       }
       header {
         margin: 0.5rem 0;
@@ -195,8 +195,11 @@ html_content = <<-HTML
         padding: 0rem 0.5rem 0rem 0.5rem;
       }
       .week-group {
-        margin: 0.5rem 0;
+        margin: 0.8rem 0;
         padding: 0.5rem;
+      }
+      .week-group:first-child {
+        margin: 0.5rem 0;
       }
       .week-header {
         padding: 0.1rem 0;
