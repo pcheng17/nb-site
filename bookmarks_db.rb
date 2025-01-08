@@ -3,7 +3,7 @@ require 'json'
 require 'date'
 
 class BookmarksDB
-  DB_PATH = './data/bookmarks.db'
+  DB_PATH = './data/bookmarks.sqlite3'
 
   def initialize
     @db = SQLite3::Database.new(DB_PATH)

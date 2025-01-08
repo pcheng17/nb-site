@@ -53,6 +53,7 @@ start_time = Time.now
 
 db = setup_bookmarks_db
 entries = db.get_all_bookmarks
+entries = entries.sort_by { |entry| entry['created_at'] }
 
 # De-duplicate slugs since titles may not be unique
 slug_counts = Hash.new(0)
