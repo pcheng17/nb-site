@@ -27,5 +27,5 @@ end
 
 class Tagging < ActiveRecord::Base
   belongs_to :tag
-  belongs_to :link
+  belongs_to :bookmark
 end
