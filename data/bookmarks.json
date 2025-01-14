@@ -1,5 +1,12 @@
 [
     {
+        "date": "2025-01-10",
+        "url": "https://kristerw.github.io/2021/10/19/fast-math/",
+        "title": "Optimizations enabled by -ffast-math",
+        "description": "At some point, I needed to better understand what `-ffast-math` was enabling for me, and I found this article particularly useful.",
+        "tags": ["programming", "optimization"]
+    },
+    {
         "date": "2025-01-05",
         "url": "https://www.swyx.io/learn-in-public",
         "title": "Learn in Public",
