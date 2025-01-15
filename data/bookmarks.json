@@ -1,5 +1,12 @@
 [
     {
+        "date": "2025-01-15",
+        "url": "https://keepachangelog.com/en/1.1.0/",
+        "title": "Keep a Changelog",
+        "description": "As someone who uses Git both professionally and in my personal projects, I'd say that I'm pretty used to the idea of documenting changes, at least via commits. However, I think I generally could do a better job of documenting changes in a more user-friendly way for many of the reasons that are mentioned in this article. (I've never been much of a journaler, go figure) Anyway, I've been trying it out for this project of building this website/blog, and I do find it very helpful for reminding me of when I did what in a user-friendly way, e.g., without having to go into my commit history. However, it also has been a great way of reminding me of how consistent incremental work pays off. I will eventually link my changelog to the version tag at the bottom of this page, by the way!",
+        "tags": ["programming", "documentation"]
+    },
+    {
         "date": "2025-01-10",
         "url": "https://kristerw.github.io/2021/10/19/fast-math/",
         "title": "Optimizations enabled by -ffast-math",
