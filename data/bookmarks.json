@@ -1,5 +1,13 @@
 [
     {
+        "date": "2025-01-22",
+        "url": "https://github.com/beancount/beancount",
+        "title": "Beancount",
+        "description": "Beancount is a [double-entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping) computer language that lets you define financial transaction records in a text file, generate reports from it, visualize trends, and much more. I've never really been happy with how I (loosely) keep track of my finances via spreadsheets; every attempt always seemed to have too much friction to actually use. I somehow recently came across Beancount and friends, such as [Ledger](https://github.com/ledger/ledger), and was immediately intrigued by the fact that (1) it's based purely on text files, (2) there's a CLI tool, and (3) it's open source. The fact that everything is stored in a text file just means that I'm no longer tied to a particular application just to keep track of my finances. Separately, I basically live in the terminal, so the fact that it's a CLI tool alone convinced me. I'm excited to learn more about this!"
+        ,
+        "tags": ["cli", "finance"]
+    },
+    {
         "date": "2025-01-15",
         "url": "https://keepachangelog.com/en/1.1.0/",
         "title": "Keep a Changelog",
